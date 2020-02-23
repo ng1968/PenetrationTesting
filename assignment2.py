@@ -13,6 +13,10 @@ same as if nmap was used.
               scan results to determine the port and protocol most likely to 
               reach the target.
 
+Reference: 
+How to Build a TCP Connection in Scapy: https://www.fir3net.com/Programming/Python/how-to-build-a-tcp-connection-in-scapy.html
+Traceroute: https://scapy.readthedocs.io/en/latest/usage.html#tcp-traceroute
+
 Example output: sudo nmap -sS 45.33.32.156 -n -p 22,23,31337 -Pn --traceroute
 Starting Nmap 7.80 ( https://nmap.org ) at 2020-02-20 09:14 EST
 Nmap scan report for 45.33.32.156
@@ -54,8 +58,10 @@ DST_PORTS = {22: 'SSH',
 SRC_HIGH_PORT = random.randint(1024,65535)
 
 def main():
-  current_time = time.asctime(time.localtime())
-  print(f'Starting scan at {current_time}')
+  current_time = time.localtime()
+  time_start = time.process_time()
+  its_online = False
+  print(f'Starting scan at {time.asctime(current_time)}')
 
   print('PORT\t\tSTATE\tSERVICE')
   for port, service in DST_PORTS.items():
@@ -71,9 +77,16 @@ def main():
       print(f'{port}/tcp\t\topen\t{service}')
       ACK=TCP(sport=SRC_HIGH_PORT, dport=port, flags='A', seq=SYNACK.ack, ack=SYNACK.seq + 1)
       send(ip/ACK, verbose=False)
-    # For right 
+      its_online = True
     else:
       print(f'{port}/tcp\t\tclosed\t{service}')
+
+  # https://scapy.readthedocs.io/en/latest/usage.html#tcp-traceroute
+  traceroute(DST_IP_ADDRESS, dport=22, verbose=None)
+  time_end = time.process_time()
+
+  if its_online:
+      print(f'Scan done: 1 IP address (1 host up) scanned in {time_end - time_start} seconds')
 
 if __name__ == '__main__':
   main()
