@@ -47,9 +47,11 @@ HOP RTT       ADDRESS
 Nmap done: 1 IP address (1 host up) scanned in 1.46 seconds
 """
 
+# Python3 version of Scapy.
 from kamene.all import *
 import random
 import time
+
 
 DST_IP_ADDRESS = '45.33.32.156'
 DST_PORTS = {22: 'SSH',
@@ -57,12 +59,15 @@ DST_PORTS = {22: 'SSH',
              31337: 'Elite'}
 SRC_HIGH_PORT = random.randint(1024,65535)
 
+
 def main():
   current_time = time.localtime()
   time_start = time.process_time()
   its_online = False
   print(f'Starting scan at {time.asctime(current_time)}')
 
+  # Checks if the ports are open.
+  # How to Build a TCP Connection in Scapy: https://www.fir3net.com/Programming/Python/how-to-build-a-tcp-connection-in-scapy.html
   print('PORT\t\tSTATE\tSERVICE')
   for port, service in DST_PORTS.items():
     # SYN packet
@@ -71,14 +76,16 @@ def main():
     # Sends packet and awaits response.
     SYNACK=sr1(ip/SYN, verbose=False)
 
-    # Since we want to make a TCP connection, we look for the SYN/ACK response with code 18
+    # Since we want to make a TCP connection, we look for the SYN/ACK flag response with code 18
     if SYNACK['TCP'].flags == 18:
-      # ACK packet send.
+      # Port is open.
       print(f'{port}/tcp\t\topen\t{service}')
+      # ACK packet send.
       ACK=TCP(sport=SRC_HIGH_PORT, dport=port, flags='A', seq=SYNACK.ack, ack=SYNACK.seq + 1)
       send(ip/ACK, verbose=False)
       its_online = True
     else:
+      # Port is closed.
       print(f'{port}/tcp\t\tclosed\t{service}')
 
   # https://scapy.readthedocs.io/en/latest/usage.html#tcp-traceroute
