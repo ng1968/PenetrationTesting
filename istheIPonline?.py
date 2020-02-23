@@ -20,6 +20,7 @@ def is_ip(ip_address):
 
 def main():
   file_name = 'Indeed.com Host Records (A).csv'
+  is_online = {}
 
   with open(file_name, 'r') as csv_file:
     reader = csv.reader(csv_file, delimiter=',')
@@ -31,10 +32,14 @@ def main():
       # to check if its alive.
       if is_ip(ip_address) and 'HTTP' in col1:
         # TCP Ping: https://scapy.readthedocs.io/en/latest/usage.html#tcp-ping
-        ans= sr1(IP(dst=ip_address)/TCP(dport=80,flags='S'), verbose=False)
+        ans = sr1(IP(dst=ip_address)/TCP(dport=80,flags='S'), verbose=False)
         if ans['TCP'].flags == 18:
-          print(f'IP address: {ip_address} is online for subdomain: {subdomain}')
+          is_online.setdefault(ip_address, [])
+          if ip_address in is_online:
+            is_online[ip_address].append(subdomain)
 
+  for key, values in is_online.items():
+    print('IP Address: {0:s} is online and has the following subdomains: {1:s}'.format(key,', '.join(values)))
 
 
 if __name__ == '__main__':
